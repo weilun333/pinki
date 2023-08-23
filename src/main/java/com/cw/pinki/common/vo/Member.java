@@ -23,7 +23,7 @@ public class Member {
 
     @Column(name = "birthday")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private java.sql.Date birthday;
 
     @Column(name = "mail")
     private String mail;
