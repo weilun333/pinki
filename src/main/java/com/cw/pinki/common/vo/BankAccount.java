@@ -19,8 +19,16 @@ public class BankAccount {
     @Column(name = "account_no")
     private Integer accountNo;
 
+    // 1: 銀行帳號
     @Column(name = "payment_method_no")
     private Integer paymentMethodNo;
+
+    // 1: 會員 2: 品牌
+    @Column(name = "member_type")
+    private Integer memberType;
+
+    @Column(name = "member_no")
+    private Integer memberNo;
 
     @Column(name = "account_number")
     private String accountNumber;
@@ -30,6 +38,9 @@ public class BankAccount {
 
     @Column(name = "expire_date")
     private String expireDate;
+
+    @Column(name = "is_usual_account")
+    private Boolean isUsualAccount;
 
     @Column(name = "process_user")
     private String processUser;
