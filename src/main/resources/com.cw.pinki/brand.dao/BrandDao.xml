@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cw.pinki.brand.dao.BrandDao">
+    <select id="findIfBrandNameExist" resultType="java.lang.Integer">
+        select count(1)
+        from brand
+        where brand_name = #{brandName}
+    </select>
+
+    <select id="findIfDesignerAccountExist" resultType="java.lang.Integer">
+        select count(1)
+        from brand
+        where designer_account = #{designerAccount}
+    </select>
+
+    <insert id="saveBrandInfo">
+        <selectKey keyProperty="brand_no" keyColumn="brand_no" order="AFTER" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO brand
+        (brand_name,
+        designer_account,
+        designer_password,
+        tax_id_no,
+        brand_tel,
+        brand_addr,
+        bank_account,
+        brand_story,
+        brand_logo,
+        cover_pic,
+        process_user,)
+        VALUES (#{brand.brandName},
+        #{brand.designerAccount},
+        #{brand.designerPassword},
+        #{brand.taxIdNo},
+        #{brand.brandTel},
+        #{brand.brandAddr},
+        #{brand.bankAccount},
+        #{brand.brandStory},
+        #{brand.brandStory},
+        #{brand.brandLogo},
+        #{brand.coverPic},
+        #{brand.processUser});
+    </insert>
+</mapper>
