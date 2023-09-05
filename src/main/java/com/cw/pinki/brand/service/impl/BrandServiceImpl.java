@@ -6,6 +6,8 @@ import com.cw.pinki.common.exception.DescribeException;
 import com.cw.pinki.common.vo.Brand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,9 +23,10 @@ public class BrandServiceImpl implements BrandService {
         if (verifyInfo(brand)) {
             brand.setBrandName(brand.getBrandName());
             brand.setDesignerAccount(brand.getDesignerAccount());
-            brand.setDesignerPassword(brand.getDesignerPassword());
             brand.setTaxIdNo(brand.getTaxIdNo());
         }
+        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        brand.setDesignerPassword(passwordEncoder.encode(brand.getDesignerPassword()));
         brand.setBrandTel(brand.getBrandTel().isEmpty() ? null : brand.getBrandTel());
         brand.setBrandAddr(brand.getBrandAddr().isEmpty() ? null : brand.getBrandAddr());
         brand.setBankAccount(brand.getBankAccount());

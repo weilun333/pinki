@@ -79,7 +79,12 @@
             <artifactId>passay</artifactId>
             <version>1.6.1</version>
         </dependency>
-
+        <!--mybatis generator-->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
