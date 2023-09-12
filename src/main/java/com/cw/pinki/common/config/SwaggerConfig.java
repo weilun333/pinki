@@ -14,7 +14,7 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicApi1() {
         return GroupedOpenApi.builder()
-                .group("pinki_brand")
+                .group("brand")
                 .pathsToMatch("/brand/**")
                 .build();
     }
@@ -22,16 +22,23 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicApi2() {
         return GroupedOpenApi.builder()
-                .group("pinki_activity")
+                .group("activity")
                 .pathsToMatch("/activity/**")
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi publicApi3() {
+        return GroupedOpenApi.builder()
+                .group("member")
+                .pathsToMatch("/member/**")
+                .build();
+    }
 
     @Bean
     public OpenAPI springOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("pinki文檔")
+                .info(new Info().title("pinki-api")
                         .description("購物網站")
                         .version("v1.0.0")
 //                        .contact(new Contact().name("cindy & wei").email("cc@gmail.com").url("google.com"))
