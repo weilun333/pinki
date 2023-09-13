@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/brand/register").permitAll()
-                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**","/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 );
 //                .rememberMe(Customizer.withDefaults());
