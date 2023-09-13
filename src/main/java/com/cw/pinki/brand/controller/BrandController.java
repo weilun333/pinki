@@ -28,13 +28,13 @@ public class BrandController {
 
     @PostMapping("/register")
     @Operation(tags = "register", description = "品牌帳號註冊")
-    public void brandRegister(HttpSession session, @Validated @RequestBody Brand brand) {
+    public void brandRegister(@Validated @RequestBody Brand brand) {
         int brandNo = brandService.register(brand);
         BankAccount bankAccount = new BankAccount();
         bankAccount.setMemberType(2);
         bankAccount.setMemberNo(brandNo);
         bankAccount.setAccountNumber(brand.getBankAccount());
-        bankAccount.setBankNo((String) session.getAttribute("bankNo"));
+        bankAccount.setBankNo(brand.getBankNo());
         bankAccount.setProcessUser(brand.getBrandName());
         paymentService.addBankAccount(bankAccount);
         log.info("品牌：{}帳號註冊成功", brand.getBrandName());

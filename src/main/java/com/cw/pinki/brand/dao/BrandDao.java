@@ -14,6 +14,6 @@ public interface BrandDao {
     int findIfDesignerAccountExist(@Param("designerAccount")String designerAccount);
 
     // 儲存註冊資料
-    int saveBrandInfo(@Param("brand") Brand brand);
+    void saveBrandInfo(@Param("brand") Brand brand);
 
 }

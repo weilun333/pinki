@@ -27,14 +27,16 @@ public class BrandServiceImpl implements BrandService {
         }
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         brand.setDesignerPassword(passwordEncoder.encode(brand.getDesignerPassword()));
-        brand.setBrandTel(brand.getBrandTel().isEmpty() ? null : brand.getBrandTel());
-        brand.setBrandAddr(brand.getBrandAddr().isEmpty() ? null : brand.getBrandAddr());
+        brand.setBrandTel(brand.getBrandTel() == null ? null : brand.getBrandTel());
+        brand.setBrandAddr(brand.getBrandAddr() == null ? null : brand.getBrandAddr());
+        brand.setBankNo(brand.getBankNo());
         brand.setBankAccount(brand.getBankAccount());
         brand.setBrandStory(brand.getBrandStory());
-        brand.setBrandLogo(brand.getBrandLogo());
-        brand.setCoverPic(brand.getCoverPic());
+        brand.setBrandLogo(brand.getBrandLogo() == null ? null : brand.getBrandLogo());
+        brand.setCoverPic(brand.getCoverPic() == null ? null : brand.getCoverPic());
         brand.setProcessUser(brand.getBrandName());
-        return brandDao.saveBrandInfo(brand);
+        brandDao.saveBrandInfo(brand);
+        return brand.getBrandNo();
     }
 
     // 驗證註冊輸入內容

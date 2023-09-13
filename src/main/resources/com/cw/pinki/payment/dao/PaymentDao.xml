@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cw.pinki.payment.dao.PaymentDao">
+    <insert id="insertNewBankAccount">
+        INSERT INTO bank_account
+        (payment_method_no,
+        member_type,
+        member_no,
+        account_number,
+        bank_no,
+        expire_date,
+        is_usual_account,
+        process_user)
+        VALUES
+        (#{payment.paymentMethodNo},
+        #{payment.memberType},
+        #{payment.memberNo},
+        #{payment.accountNumber},
+        #{payment.bankNo},
+        #{payment.expireDate},
+        #{payment.isUsualAccount},
+        #{payment.processUser});
+    </insert>
+</mapper>

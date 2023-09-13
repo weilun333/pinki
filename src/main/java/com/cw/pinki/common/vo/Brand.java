@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -37,7 +38,7 @@ public class Brand {
     private String designerPassword;
 
     @NotNull(message = "統一編號不得為空")
-    @Pattern(regexp = "^[0-9]{8}$",message = "統一編號須為8位數")
+    @Pattern(regexp = "^[0-9]{8}$", message = "統一編號須為8位數")
     @Column(name = "tax_id_no")
     private String taxIdNo;
 
@@ -47,6 +48,10 @@ public class Brand {
     @Column(name = "brand_addr")
     private String brandAddr;
 
+    @NotNull(message = "銀行代碼不得為空")
+    @Column(name = "bank_no")
+    private String bankNo;
+
     @NotNull(message = "須設定收款銀行帳戶")
     @Column(name = "bank_account")
     private String bankAccount;
@@ -55,11 +60,11 @@ public class Brand {
     @Column(name = "brand_story")
     private String brandStory;
 
-    @NotNull(message = "須設定品牌logo")
+    //    @NotNull(message = "須設定品牌logo")
     @Column(name = "brand_logo")
     private byte[] brandLogo;
 
-    @NotNull(message = "須設定封面照片")
+    //    @NotNull(message = "須設定封面照片")
     @Column(name = "cover_pic")
     private byte[] coverPic;
 
@@ -67,13 +72,13 @@ public class Brand {
     private Boolean designerStatus;
 
     @Column(name = "create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
-    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
+    private LocalDateTime createTime;
 
     @Column(name = "process_user")
     private String processUser;
 
     @Column(name = "last_update_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
-    private Date lastUpdateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
+    private LocalDateTime lastUpdateTime;
 }

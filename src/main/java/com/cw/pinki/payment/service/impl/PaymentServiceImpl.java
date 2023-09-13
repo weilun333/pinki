@@ -22,6 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
         // 新增銀行帳號
         if(!bankAccount.getAccountNumber().isEmpty() && !bankAccount.getBankNo().isEmpty()){
             bankAccount.setPaymentMethodNo(1);
+            bankAccount.setIsUsualAccount(bankAccount.getIsUsualAccount() == null);
             paymentDao.insertNewBankAccount(bankAccount);
             log.info("會員新增銀行帳號成功");
             return 1;
