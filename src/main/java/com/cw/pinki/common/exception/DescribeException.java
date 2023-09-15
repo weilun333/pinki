@@ -16,4 +16,9 @@ public class DescribeException extends  RuntimeException{
         this.code = code;
     }
 
+    public DescribeException(ExceptionEnum exceptionEnum){
+        super(exceptionEnum.getMsg());
+        this.code = exceptionEnum.getCode();
+    }
+
 }

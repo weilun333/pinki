@@ -40,4 +40,8 @@
         #{brand.coverPic},
         #{brand.processUser});
     </insert>
+
+    <select id="findPasswordByAccount">
+        select designer_password from brand where designer_account = #{designerAccount}
+    </select>
 </mapper>

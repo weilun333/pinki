@@ -16,4 +16,5 @@ public interface BrandDao {
     // 儲存註冊資料
     void saveBrandInfo(@Param("brand") Brand brand);
 
+    String findPasswordByAccount(@Param("designerAccount") String designerAccount);
 }

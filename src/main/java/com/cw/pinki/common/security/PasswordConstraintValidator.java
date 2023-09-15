@@ -3,9 +3,11 @@ package com.cw.pinki.common.security;
 import com.cw.pinki.common.annotation.ValidPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
 import org.passay.*;
 
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
@@ -14,6 +16,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 
     }
 
+    @SneakyThrows
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         /*
@@ -31,6 +34,15 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new WhitespaceRule()
         ));
         RuleResult result = validator.validate(new PasswordData(password));
-        return result.isValid();
+        if(result.isValid()){
+            return true;
+        }
+        context.disableDefaultConstraintViolation();
+        StringJoiner joiner = new StringJoiner(",");
+        for(String mes : validator.getMessages(result)){
+            joiner.add(mes);
+        }
+        context.buildConstraintViolationWithTemplate(joiner.toString()).addConstraintViolation();
+        return false;
     }
 }

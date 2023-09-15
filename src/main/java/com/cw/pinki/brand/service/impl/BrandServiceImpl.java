@@ -2,13 +2,16 @@ package com.cw.pinki.brand.service.impl;
 
 import com.cw.pinki.brand.dao.BrandDao;
 import com.cw.pinki.brand.service.BrandService;
+import com.cw.pinki.common.dto.BrandLoginDto;
 import com.cw.pinki.common.exception.DescribeException;
 import com.cw.pinki.common.vo.Brand;
+import com.cw.pinki.common.vo.VerificationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.cw.pinki.common.exception.ExceptionEnum.*;
 
 @Slf4j
 @Service
@@ -16,6 +19,12 @@ public class BrandServiceImpl implements BrandService {
 
     @Autowired
     private BrandDao brandDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private VerificationToken verificationToken;
 
     // 品牌註冊
     @Override
@@ -25,7 +34,6 @@ public class BrandServiceImpl implements BrandService {
             brand.setDesignerAccount(brand.getDesignerAccount());
             brand.setTaxIdNo(brand.getTaxIdNo());
         }
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         brand.setDesignerPassword(passwordEncoder.encode(brand.getDesignerPassword()));
         brand.setBrandTel(brand.getBrandTel() == null ? null : brand.getBrandTel());
         brand.setBrandAddr(brand.getBrandAddr() == null ? null : brand.getBrandAddr());
@@ -39,19 +47,45 @@ public class BrandServiceImpl implements BrandService {
         return brand.getBrandNo();
     }
 
+    @Override
+    public void login(BrandLoginDto dto) {
+        String account = dto.getDesignerAccount();
+        if (brandDao.findIfDesignerAccountExist(account) == 0) {
+            log.error("輸入的帳號{}：不存在，請確認!", account);
+            throw new DescribeException(UNKNOWN_ACCOUNT);
+        } else if (!passwordEncoder.matches(dto.getDesignerPassword(), brandDao.findPasswordByAccount(account))) {
+            log.error("帳號{}：密碼輸入錯誤!", account);
+            throw new DescribeException(INCORRECT_PASSWORD);
+        }
+    }
+
+    @Override
+    public boolean logout(String designerAccount) {
+        return true;
+    }
+
+    @Override
+    public void createVerification(Brand brand, String token) {
+        VerificationToken registerToken = new VerificationToken(token, brand);
+    }
+
     // 驗證註冊輸入內容
     private boolean verifyInfo(Brand brand) {
         if (brand == null) {
-            throw new DescribeException("註冊訊息不得為空", 0);
+            log.error("註冊訊息不得為空");
+            throw new DescribeException(INCOMPLETE_INFO);
         }
         if (brandDao.findIfBrandNameExist(brand.getBrandName()) > 0) {
-            throw new DescribeException("品牌名稱重複，請更換", 0);
+            log.error("品牌{}名稱重複，請更換", brand.getBrandName());
+            throw new DescribeException(DUPLICATED_NAME);
         }
         if (brandDao.findIfDesignerAccountExist(brand.getDesignerAccount()) > 0) {
-            throw new DescribeException("帳號已存在，請更換", 0);
+            log.error("帳號{}已存在，請更換", brand.getDesignerAccount());
+            throw new DescribeException(DUPLICATED_ACCOUNT);
         }
         if (!checkTaxId(brand.getTaxIdNo())) {
-            throw new DescribeException("統一編號不存在，請重新確認", 0);
+            log.error("統一編號不存在，請重新確認");
+            throw new DescribeException(INCORRECT_INFO);
         }
         return true;
     }

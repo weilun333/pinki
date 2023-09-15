@@ -1,5 +1,6 @@
 package com.cw.pinki.common.vo;
 
+import com.cw.pinki.common.annotation.PasswordValueMatch;
 import com.cw.pinki.common.annotation.ValidPassword;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -10,6 +11,13 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@PasswordValueMatch.List(
+        @PasswordValueMatch(
+                field = "designerPassword",
+                fieldMatch = "confirmPassword",
+                message = "該密碼與您輸入的確認密碼不一致"
+        )
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +44,9 @@ public class Brand {
     @NotNull(message = "密碼不得為空")
     @Column(name = "designer_password")
     private String designerPassword;
+
+    @Transient
+    private String confirmPassword;
 
     @NotNull(message = "統一編號不得為空")
     @Pattern(regexp = "^[0-9]{8}$", message = "統一編號須為8位數")
