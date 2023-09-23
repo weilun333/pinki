@@ -4,8 +4,10 @@ import com.cw.pinki.brand.dao.BrandDao;
 import com.cw.pinki.brand.service.BrandService;
 import com.cw.pinki.common.dto.BrandLoginDto;
 import com.cw.pinki.common.exception.DescribeException;
+import com.cw.pinki.common.token.VerificationToken;
+import com.cw.pinki.common.token.VerificationTokenRepository;
 import com.cw.pinki.common.vo.Brand;
-import com.cw.pinki.common.vo.VerificationToken;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,11 +26,11 @@ public class BrandServiceImpl implements BrandService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private VerificationToken verificationToken;
+    private VerificationTokenRepository tokenRepository;
 
     // 品牌註冊
     @Override
-    public int register(Brand brand) {
+    public Brand register(Brand brand) {
         if (verifyInfo(brand)) {
             brand.setBrandName(brand.getBrandName());
             brand.setDesignerAccount(brand.getDesignerAccount());
@@ -44,7 +46,7 @@ public class BrandServiceImpl implements BrandService {
         brand.setCoverPic(brand.getCoverPic() == null ? null : brand.getCoverPic());
         brand.setProcessUser(brand.getBrandName());
         brandDao.saveBrandInfo(brand);
-        return brand.getBrandNo();
+        return brand;
     }
 
     @Override
@@ -65,8 +67,29 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Transactional
     public void createVerification(Brand brand, String token) {
         VerificationToken registerToken = new VerificationToken(token, brand);
+        tokenRepository.save(registerToken);
+    }
+
+
+    @Override
+    @Transactional
+    public VerificationToken getVerification(String verificationToken) {
+        return tokenRepository.findByToken(verificationToken);
+    }
+
+    @Override
+    @Transactional
+    public Brand getDesigner(String verificationToken) {
+        return tokenRepository.findByToken(verificationToken).getBrand();
+    }
+
+    @Override
+    @Transactional
+    public void enableDesignerAccount(Brand brand) {
+        brandDao.updateAccountStatus(brand);
     }
 
     // 驗證註冊輸入內容

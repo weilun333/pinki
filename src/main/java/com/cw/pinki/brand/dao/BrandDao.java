@@ -17,4 +17,6 @@ public interface BrandDao {
     void saveBrandInfo(@Param("brand") Brand brand);
 
     String findPasswordByAccount(@Param("designerAccount") String designerAccount);
+
+    void updateAccountStatus(@Param("brand") Brand brand);
 }
