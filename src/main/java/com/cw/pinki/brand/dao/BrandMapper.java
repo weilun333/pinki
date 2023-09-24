@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BrandDao {
+public interface BrandMapper {
 
     // 查詢品牌名稱是否重複
     int findIfBrandNameExist(@Param("brandName") String brandName);

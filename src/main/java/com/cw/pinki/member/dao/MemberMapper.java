@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberDao {
+public interface MemberMapper {
     /** 檢核信箱是否存在 */
     Integer checkMailExists(@Param("mail") String mail);
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cw.pinki.common.exception.DescribeException;
 import com.cw.pinki.common.vo.Member;
-import com.cw.pinki.member.dao.MemberDao;
+import com.cw.pinki.member.dao.MemberMapper;
 import com.cw.pinki.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
-    private MemberDao memberDao;
+    private MemberMapper memberDao;
 
     /**檢核信箱是否存在
      * @param  mail

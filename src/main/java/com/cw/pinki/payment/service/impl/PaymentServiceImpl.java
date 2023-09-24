@@ -1,7 +1,7 @@
 package com.cw.pinki.payment.service.impl;
 
 import com.cw.pinki.common.vo.BankAccount;
-import com.cw.pinki.payment.dao.PaymentDao;
+import com.cw.pinki.payment.dao.PaymentMapper;
 import com.cw.pinki.payment.service.PaymentService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
-    private PaymentDao paymentDao;
+    private PaymentMapper paymentDao;
 
     @Override
     public int addBankAccount(BankAccount bankAccount) {

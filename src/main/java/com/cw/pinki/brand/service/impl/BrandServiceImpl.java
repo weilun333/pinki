@@ -1,6 +1,6 @@
 package com.cw.pinki.brand.service.impl;
 
-import com.cw.pinki.brand.dao.BrandDao;
+import com.cw.pinki.brand.dao.BrandMapper;
 import com.cw.pinki.brand.service.BrandService;
 import com.cw.pinki.common.dto.BrandLoginDto;
 import com.cw.pinki.common.exception.DescribeException;
@@ -20,7 +20,7 @@ import static com.cw.pinki.common.exception.ExceptionEnum.*;
 public class BrandServiceImpl implements BrandService {
 
     @Autowired
-    private BrandDao brandDao;
+    private BrandMapper brandMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,17 +45,17 @@ public class BrandServiceImpl implements BrandService {
         brand.setBrandLogo(brand.getBrandLogo() == null ? null : brand.getBrandLogo());
         brand.setCoverPic(brand.getCoverPic() == null ? null : brand.getCoverPic());
         brand.setProcessUser(brand.getBrandName());
-        brandDao.saveBrandInfo(brand);
+        brandMapper.saveBrandInfo(brand);
         return brand;
     }
 
     @Override
     public void login(BrandLoginDto dto) {
         String account = dto.getDesignerAccount();
-        if (brandDao.findIfDesignerAccountExist(account) == 0) {
+        if (brandMapper.findIfDesignerAccountExist(account) == 0) {
             log.error("輸入的帳號{}：不存在，請確認!", account);
             throw new DescribeException(UNKNOWN_ACCOUNT);
-        } else if (!passwordEncoder.matches(dto.getDesignerPassword(), brandDao.findPasswordByAccount(account))) {
+        } else if (!passwordEncoder.matches(dto.getDesignerPassword(), brandMapper.findPasswordByAccount(account))) {
             log.error("帳號{}：密碼輸入錯誤!", account);
             throw new DescribeException(INCORRECT_PASSWORD);
         }
@@ -89,7 +89,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     @Transactional
     public void enableDesignerAccount(Brand brand) {
-        brandDao.updateAccountStatus(brand);
+        brandMapper.updateAccountStatus(brand);
     }
 
     // 驗證註冊輸入內容
@@ -98,11 +98,11 @@ public class BrandServiceImpl implements BrandService {
             log.error("註冊訊息不得為空");
             throw new DescribeException(INCOMPLETE_INFO);
         }
-        if (brandDao.findIfBrandNameExist(brand.getBrandName()) > 0) {
+        if (brandMapper.findIfBrandNameExist(brand.getBrandName()) > 0) {
             log.error("品牌{}名稱重複，請更換", brand.getBrandName());
             throw new DescribeException(DUPLICATED_NAME);
         }
-        if (brandDao.findIfDesignerAccountExist(brand.getDesignerAccount()) > 0) {
+        if (brandMapper.findIfDesignerAccountExist(brand.getDesignerAccount()) > 0) {
             log.error("帳號{}已存在，請更換", brand.getDesignerAccount());
             throw new DescribeException(DUPLICATED_ACCOUNT);
         }

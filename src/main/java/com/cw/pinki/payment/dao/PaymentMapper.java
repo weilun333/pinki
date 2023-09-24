@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PaymentDao {
+public interface PaymentMapper {
     int insertNewBankAccount(@Param("payment") BankAccount bankAccount);
 
 }
