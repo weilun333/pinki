@@ -2,12 +2,13 @@ package com.cw.pinki.common.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Date;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Entity

@@ -1,18 +1,30 @@
 package com.cw.pinki.brand.dao;
 
 import com.cw.pinki.common.vo.ProdCategory;
-import com.cw.pinki.common.vo.ProdLabel;
+import com.cw.pinki.common.vo.ProdLabelConfig;
+
+import java.util.List;
 
 public interface ProdTypeDao {
-    ProdCategory insertProdCategory(ProdCategory prodCategory);
+    // 商品類別
+    List<ProdCategory> getAllCategory();
 
-    ProdCategory updateProdCategory(ProdCategory prodCategory);
+    int findByProdCategoryName(String prodCategoryName);
+
+    void insertProdCategory(ProdCategory prodCategory);
+
+    void updateProdCategory(ProdCategory prodCategory);
 
     boolean deleteProdCategory(Integer prodCategoryNo);
 
-    ProdLabel insertProdLabel(ProdLabel prodLabel);
+    // 商品標籤
+    List<ProdLabelConfig> getAllProdLabel(Integer brandNo);
 
-    ProdLabel updateProdLabel(ProdLabel prodLabel);
+    int findByProdLabelName(String prodLabelName, Integer brandNo);
+
+    void insertProdLabel(ProdLabelConfig prodLabel);
+
+    void updateProdLabel(ProdLabelConfig prodLabel);
 
     boolean deleteProdLabel(Integer prodLabelNo);
 

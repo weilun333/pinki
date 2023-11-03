@@ -1,14 +1,15 @@
 package com.cw.pinki.common.vo;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Data
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @Entity
 @IdClass(ShoppingCartId.class)
@@ -28,7 +29,7 @@ public class ShoppingCart {
 
 @EqualsAndHashCode
 @AllArgsConstructor
-class ShoppingCartId implements Serializable{
+class ShoppingCartId implements Serializable {
     private Integer memberNo;
     private Integer prodNo;
 }

@@ -1,18 +1,26 @@
 package com.cw.pinki.brand.service;
 
 import com.cw.pinki.common.vo.ProdCategory;
-import com.cw.pinki.common.vo.ProdLabel;
+import com.cw.pinki.common.vo.ProdLabelConfig;
+
+import java.util.List;
 
 public interface ProdTypeService {
-    ProdCategory addProdCategory(String prodCategoryName);
+    // 商品類別
+    List<ProdCategory> getAllProdCategory();
 
-    ProdCategory changeProdCategoryName(String prodCategoryName);
+    boolean addProdCategory(List<String> categoryName);
+
+    void changeProdCategoryName(String prodCategoryName);
 
     boolean deleteProdCategory(Integer prodCategoryNo);
 
-    ProdLabel addProdLabel(ProdLabel prodLabel);
+    // 商品標籤
+    List<ProdLabelConfig> getAllProdLabel(Integer brandNo);
 
-    ProdLabel changeProdLabelName(ProdLabel prodLabel);
+    boolean addProdLabel(Integer brandNo, List<String> prodLabel);
+
+    void changeProdLabelName(Integer brandNo, String prodLabel);
 
     boolean deleteProdLabel(Integer prodLabelNo);
 }

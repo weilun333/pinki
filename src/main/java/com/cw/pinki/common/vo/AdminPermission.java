@@ -7,8 +7,6 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -26,6 +24,6 @@ public class AdminPermission {
     private String processUser;
 
     @Column(name = "last_update_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date lastUpdateTime;
 }

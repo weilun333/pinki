@@ -9,16 +9,16 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "prod_label")
-public class ProdLabel {
+@Table(name = "prod_label_config")
+public class ProdLabelConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prod_label_no")
-    private Integer prodLabelNo;
-
-    @Column(name = "pro_label_config_no")
+    @Column(name = "prod_label_config_no")
     private Integer prodLabelConfigNo;
 
-    @Column(name = "prod_no")
-    private String prodNo;
+    @Column(name = "brand_no")
+    private Integer brandNo;
+
+    @Column(name = "prod_label_name")
+    private String prodLabelName;
 }

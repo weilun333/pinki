@@ -37,6 +37,7 @@ public class BrandServiceImpl implements BrandService {
             brand.setTaxIdNo(brand.getTaxIdNo());
         }
         brand.setDesignerPassword(passwordEncoder.encode(brand.getDesignerPassword()));
+        // TODO: 圖片插入
         brand.setBrandTel(brand.getBrandTel() == null ? null : brand.getBrandTel());
         brand.setBrandAddr(brand.getBrandAddr() == null ? null : brand.getBrandAddr());
         brand.setBankNo(brand.getBankNo());
@@ -54,10 +55,10 @@ public class BrandServiceImpl implements BrandService {
         String account = dto.getDesignerAccount();
         if (brandMapper.findIfDesignerAccountExist(account) == 0) {
             log.error("輸入的帳號{}：不存在，請確認!", account);
-            throw new DescribeException(UNKNOWN_ACCOUNT);
+            throw new DescribeException(INCORRECT_PASSWORD_ACCOUNT);
         } else if (!passwordEncoder.matches(dto.getDesignerPassword(), brandMapper.findPasswordByAccount(account))) {
             log.error("帳號{}：密碼輸入錯誤!", account);
-            throw new DescribeException(INCORRECT_PASSWORD);
+            throw new DescribeException(INCORRECT_PASSWORD_ACCOUNT);
         }
     }
 

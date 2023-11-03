@@ -1,13 +1,14 @@
 package com.cw.pinki.common.vo;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -22,9 +23,10 @@ public class CollectedDesigner {
     @Column(name = "brand_no")
     private Integer brandNo;
 }
+
 @EqualsAndHashCode
 @AllArgsConstructor
-class CollectedDesignerId implements Serializable{
+class CollectedDesignerId implements Serializable {
     private Integer memberNo;
     private Integer brandNo;
 

@@ -1,9 +1,9 @@
 package com.cw.pinki.common.exception;
 
-public class DescribeException extends  RuntimeException{
+public class DescribeException extends RuntimeException {
     private Integer code;
 
-    public DescribeException(String message, Integer code){
+    public DescribeException(String message, Integer code) {
         super(message);
         this.code = code;
     }
@@ -16,7 +16,7 @@ public class DescribeException extends  RuntimeException{
         this.code = code;
     }
 
-    public DescribeException(ExceptionEnum exceptionEnum){
+    public DescribeException(ExceptionEnum exceptionEnum) {
         super(exceptionEnum.getMsg());
         this.code = exceptionEnum.getCode();
     }

@@ -18,9 +18,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -38,7 +37,7 @@ public class Member {
     @Past(message = "生日不可為未來日期")
     @Column(name = "birthday")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate  birthday;
+    private LocalDate birthday;
 
     @NotBlank(message = "會員信箱不得為空")
     @Pattern(regexp = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$", message = "不符合e-mail格式，請確認")
@@ -78,5 +77,5 @@ public class Member {
     @Column(name = "last_update_time")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private LocalDateTime lastUpdateTime;
-	
+
 }
