@@ -3,9 +3,17 @@ package com.cw.pinki.brand.dao.impl;
 import com.cw.pinki.brand.dao.ProdTypeDao;
 import com.cw.pinki.common.vo.ProdCategory;
 import com.cw.pinki.common.vo.ProdLabel;
+import com.cw.pinki.common.vo.ProdLabelConfig;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class ProdTypeDaoImpl implements ProdTypeDao {
@@ -17,30 +25,45 @@ public class ProdTypeDaoImpl implements ProdTypeDao {
     }
 
     @Override
-    public ProdCategory insertProdCategory(ProdCategory prodCategory) {
-        if(prodCategory != null && prodCategory.getProdCategoryNo() == null){
-            this.getSession().persist(prodCategory);
-            return prodCategory;
+    public List<ProdCategory> getAllCategory() {
+        CriteriaBuilder criteriaBuilder = this.getSession().getCriteriaBuilder();
+        CriteriaQuery<ProdCategory> criteriaQuery = criteriaBuilder.createQuery(ProdCategory.class);
+        TypedQuery<ProdCategory> typedQuery = this.getSession().createQuery(criteriaQuery);
+        List<ProdCategory> prodCategories = typedQuery.getResultList();
+        if (prodCategories != null && !prodCategories.isEmpty()) {
+            return prodCategories;
+        } else {
+            return null;
         }
-        return null;
     }
 
     @Override
-    public ProdCategory updateProdCategory(ProdCategory prodCategory) {
-        if(prodCategory != null && prodCategory.getProdCategoryNo() != null){
-            ProdCategory vo = this.getSession().get(ProdCategory.class, prodCategory.getProdCategoryNo());
-            if(vo != null){
-                return this.getSession().merge(vo);
-            }
+    public int findByProdCategoryName(String prodCategoryName) {
+        Query<Integer> query = getSession().createQuery("select prodCategoryNo from ProdCategory where prodCategoryName = :prodCategoryName", Integer.class);
+        query.setParameter("prodCategoryName", prodCategoryName);
+        Integer prodCategoryNo = query.uniqueResult();
+        return Objects.requireNonNullElse(prodCategoryNo, -1);
+    }
+
+    @Override
+    public void insertProdCategory(ProdCategory prodCategory) {
+        if (prodCategory != null && prodCategory.getProdCategoryNo() == null) {
+            this.getSession().persist(prodCategory);
         }
-        return null;
+    }
+
+    @Override
+    public void updateProdCategory(ProdCategory prodCategory) {
+        if (prodCategory != null && prodCategory.getProdCategoryNo() != null) {
+            this.getSession().merge(prodCategory);
+        }
     }
 
     @Override
     public boolean deleteProdCategory(Integer prodCategoryNo) {
-        if(prodCategoryNo != null){
+        if (prodCategoryNo != null) {
             ProdCategory vo = this.getSession().get(ProdCategory.class, prodCategoryNo);
-            if(vo != null){
+            if (vo != null) {
                 this.getSession().remove(vo);
                 return true;
             }
@@ -49,30 +72,38 @@ public class ProdTypeDaoImpl implements ProdTypeDao {
     }
 
     @Override
-    public ProdLabel insertProdLabel(ProdLabel prodLabel) {
-        if(prodLabel != null && prodLabel.getProdLabelNo() == null){
-            this.getSession().persist(prodLabel);
-            return prodLabel;
-        }
-        return null;
+    public List<ProdLabelConfig> getAllProdLabel(Integer brandNo) {
+        Query<ProdLabelConfig> query = getSession().createQuery("from ProdLabelConfig where brandNo = :brandNo", ProdLabelConfig.class);
+        query.setParameter("brandNo", brandNo);
+        return query.list();
     }
 
     @Override
-    public ProdLabel updateProdLabel(ProdLabel prodLabel) {
-        if(prodLabel != null && prodLabel.getProdLabelNo()!=null){
-            ProdLabel vo = this.getSession().get(ProdLabel.class, prodLabel.getProdLabelNo());
-            if(vo != null){
-                this.getSession().merge(vo);
-            }
+    public int findByProdLabelName(String prodLabelName, Integer brandNo) {
+        Query<Integer> query = getSession().createQuery("select prodLabelConfigNo from ProdLabelConfig where brandNo = :brandNo and prodLabelName = :prodLabelName", Integer.class);
+        Integer prodLabelConfigNo = query.uniqueResult();
+        return Objects.requireNonNullElse(prodLabelConfigNo, -1);
+    }
+
+    @Override
+    public void insertProdLabel(ProdLabelConfig prodLabel) {
+        if (prodLabel != null && prodLabel.getProdLabelConfigNo() == null) {
+            this.getSession().persist(prodLabel);
         }
-        return null;
+    }
+
+    @Override
+    public void updateProdLabel(ProdLabelConfig prodLabel) {
+        if (prodLabel != null && prodLabel.getProdLabelConfigNo() != null) {
+            this.getSession().merge(prodLabel);
+        }
     }
 
     @Override
     public boolean deleteProdLabel(Integer prodLabelNo) {
-        if(prodLabelNo != null){
+        if (prodLabelNo != null) {
             ProdLabel vo = this.getSession().get(ProdLabel.class, prodLabelNo);
-            if(vo != null){
+            if (vo != null) {
                 this.getSession().remove(vo);
                 return true;
             }

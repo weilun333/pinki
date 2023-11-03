@@ -8,8 +8,6 @@ import java.util.Date;
 
 @Data
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @Entity
 @Table(name = "bank_account")
@@ -46,7 +44,7 @@ public class BankAccount {
     private String processUser;
 
     @Column(name = "last_update_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date lastUpdateTime;
 
 }

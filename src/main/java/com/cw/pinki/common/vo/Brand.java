@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
 
 @PasswordValueMatch.List(
         @PasswordValueMatch(
@@ -20,8 +20,6 @@ import java.util.Set;
         )
 )
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Entity

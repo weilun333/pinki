@@ -5,8 +5,7 @@ public enum ExceptionEnum {
     DUPLICATED_NAME(0,"名稱不可重複"),
     DUPLICATED_ACCOUNT(0,"帳號不可重複"),
     INCORRECT_INFO(1,"輸入資訊不存在"),
-    UNKNOWN_ACCOUNT(1,"帳號不存在"),
-    INCORRECT_PASSWORD(1,"密碼錯誤")
+    INCORRECT_PASSWORD_ACCOUNT(1,"帳號或密碼錯誤")
     ;
 
     private Integer code;

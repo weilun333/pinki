@@ -7,8 +7,6 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @Entity
@@ -35,13 +33,13 @@ public class Admin {
     private String createUser;
 
     @Column(name = "create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     @Column(name = "process_user")
     private String processUser;
 
     @Column(name = "last_update_time")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone= "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     private Date lastUpdateTime;
 }
